@@ -1,4 +1,4 @@
-import MySQLdb as sql
+import pymysql as sql
 from getpass import getpass
 
 
@@ -23,7 +23,7 @@ class DerivedPatientsAsIndex:
         create_str = """ROW_ID UNSIGNED INT, SUBJECT_ID UNSIGNED INT"""
         select_str = """SELECT ROW_ID, SUBJECT_ID"""
 
-        exec_str = f"""CREATE TABLE {tbl}{create_str} AS {select_str} FROM {mimic_source_str}"""
+        exec_str = f"""CREATE TABLE {derived_tbl_str}{create_str} AS {select_str} FROM {mimic_source_str}"""
 
         self.mimic_cur.execute(exec_str)
         self.mimic_conn.commit()
