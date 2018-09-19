@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bfc4c55f-7a5a-4c4d-a432-c46c6788e05d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DerivedPatientsAsIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/DerivedPatientsAsIndex.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DerivedVisitsAsIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/DerivedVisitsAsIndex.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,34 +35,41 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="3" />
-          <entry key="py" value="2832" />
+          <entry key="py" value="2840" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="2835" />
+          <entry key="Python" value="2843" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DerivedPatientsAsIndex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+            <state relative-caret-position="272">
+              <caret line="16" column="18" selection-end-line="42" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
-                <marker date="1537382220841" expanded="true" signature="81:1430" ph="..." />
+                <marker date="1537382362753" expanded="true" signature="81:1430" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DerivedVisitsAsIndex.py">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="401">
+              <caret line="38" column="34" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -82,8 +88,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/DerivedLoincLabEvents.py" />
-        <option value="$PROJECT_DIR$/DerivedVisitsAsIndex.py" />
         <option value="$PROJECT_DIR$/DerivedPatientsAsIndex.py" />
+        <option value="$PROJECT_DIR$/DerivedVisitsAsIndex.py" />
       </list>
     </option>
   </component>
@@ -172,16 +178,23 @@
     <entry file="file://$PROJECT_DIR$/DerivedLoincLabEvents.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/DerivedVisitsAsIndex.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/DerivedPatientsAsIndex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
+        <state relative-caret-position="272">
+          <caret line="16" column="18" selection-end-line="42" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-            <marker date="1537382220841" expanded="true" signature="81:1430" ph="..." />
+            <marker date="1537382362753" expanded="true" signature="81:1430" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DerivedVisitsAsIndex.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="38" column="34" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
