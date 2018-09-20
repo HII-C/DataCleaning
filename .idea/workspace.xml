@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="bfc4c55f-7a5a-4c4d-a432-c46c6788e05d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DBConnection.py" beforeDir="false" afterPath="$PROJECT_DIR$/DBConnection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DerivedLoincLabEvents.py" beforeDir="false" afterPath="$PROJECT_DIR$/DerivedLoincLabEvents.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DerivedPatientsAsIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/DerivedPatientsAsIndex.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DerivedVisitsAsIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/DerivedVisitsAsIndex.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DerivedTableGeneration.py" beforeDir="false" afterPath="$PROJECT_DIR$/DerivedTableGeneration.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,23 +25,23 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="10" />
+          <entry key="py" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="10" />
+          <entry key="Python" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="3" />
-          <entry key="py" value="3748" />
+          <entry key="py" value="4198" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="3751" />
+          <entry key="Python" value="4201" />
         </counts>
       </usages-collector>
     </session>
@@ -52,27 +49,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/DerivedPatientsAsIndex.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DerivedVisitsAsIndex.py">
+        <entry file="file://$PROJECT_DIR$/DerivedTableGeneration.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" selection-start-line="20" selection-end-line="21" selection-end-column="64" />
+            <state relative-caret-position="323">
+              <caret line="19" column="38" lean-forward="true" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
               <folding>
-                <marker date="1537410758870" expanded="true" signature="91:133" ph="..." />
+                <marker date="1537411836480" expanded="true" signature="69:74" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DerivedLoincLabEvents.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="23" selection-start-line="23" selection-end-line="24" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -80,11 +63,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DBConnection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="64" lean-forward="true" selection-start-line="24" selection-start-column="64" selection-end-line="24" selection-end-column="64" />
+            <state relative-caret-position="102">
+              <caret line="6" column="30" lean-forward="true" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
-                <marker date="1537410657342" expanded="true" signature="71:72" ph="..." />
               </folding>
             </state>
           </provider>
@@ -109,6 +91,7 @@
         <option value="$PROJECT_DIR$/DerivedLoincLabEvents.py" />
         <option value="$PROJECT_DIR$/DerivedVisitsAsIndex.py" />
         <option value="$PROJECT_DIR$/DerivedPatientsAsIndex.py" />
+        <option value="$PROJECT_DIR$/DerivedTableGeneration.py" />
       </list>
     </option>
   </component>
@@ -167,9 +150,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.29865772" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29865772" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -215,36 +197,46 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/DBConnection.py">
+    <entry file="file://$PROJECT_DIR$/DerivedVisitsAsIndex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="64" lean-forward="true" selection-start-line="24" selection-start-column="64" selection-end-line="24" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-            <marker date="1537410657342" expanded="true" signature="71:72" ph="..." />
-          </folding>
+        <state relative-caret-position="374">
+          <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="61" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DerivedLoincLabEvents.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="23" selection-start-line="23" selection-end-line="24" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DerivedVisitsAsIndex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" selection-start-line="20" selection-end-line="21" selection-end-column="64" />
-          <folding>
-            <marker date="1537410758870" expanded="true" signature="91:133" ph="..." />
-          </folding>
+        <state relative-caret-position="314">
+          <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DerivedPatientsAsIndex.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DBConnection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="30" lean-forward="true" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DerivedTableGeneration.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="38" lean-forward="true" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+          <folding>
+            <marker date="1537411836480" expanded="true" signature="69:74" ph="..." />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
