@@ -21,7 +21,7 @@ class DerivedPatientsAsIndex:
         labevents_tbl_str = """mimic.LABEVENTS"""
         labitems_tbl_str = """mimic.D_LABITEMS"""
         derived_tbl_str = f"""derived.{tbl}"""
-        create_str = """ROW_ID UNSIGNED INT, SUBJECT_ID UNSIGNED INT, HADM_ID UNSIGNED INT, LOINC_CODE VARCHAR(100), 
+        create_str = """ROW_ID UNSIGNED INT, SUBJECT_ID UNSIGNED INT, HADM_ID UNSIGNED INT, LOINC_CODE VARCHAR(7), 
         CHARTTIME TIMESTAMP(0), VALUE VARCHAR(200), VALUENUM DOUBLE, VALUEUOM VARCHAR(20), FLAG VARCHAR(20) """
         select_labevents_str = """SELECT ROW_ID, SUBJECT_ID, HADM_ID, CHARTTIME, VALUE, VALUENUM, VALUEUOM, FLAG"""
         select_labitems_str = """SELECT LOINC_CODE"""
