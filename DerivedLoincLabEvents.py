@@ -1,4 +1,4 @@
-import pymysql as sql
+import MySQLdb as sql
 from getpass import getpass
 
 
