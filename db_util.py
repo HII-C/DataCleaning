@@ -21,3 +21,4 @@ class DatabaseHandle:
 class DerivedKnowledgeHandles:
     mimic: DatabaseHandle
     derived: DatabaseHandle
+    capstone: DatabaseHandle
