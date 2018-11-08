@@ -1,11 +1,12 @@
 import MySQLdb as sql
+import MySQLdb.connections as conns
 from getpass import getpass
 from dataclasses import dataclass
 
 
 class DatabaseHandle:
-    connection: sql.connections.Connection = None
-    cursor: sql.cursors.Cursor = None
+    connection: conns.Connection = None
+    cursor: conns.cursors.Cursor = None
     user: str = None
     host: str = None
     db: str = None
@@ -21,4 +22,9 @@ class DatabaseHandle:
 class DerivedKnowledgeHandles:
     mimic: DatabaseHandle
     derived: DatabaseHandle
+    capstone: DatabaseHandle
+
+
+@dataclass
+class BethKnowledgeHandle:
     capstone: DatabaseHandle

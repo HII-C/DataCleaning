@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+#intelliJ
+.idea/workspace.xml
+
+#other
+tmp.json
