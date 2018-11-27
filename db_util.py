@@ -26,10 +26,5 @@ class DerivedKnowledgeHandles:
 
 
 @dataclass
-class BethKnowledgeHandle:
-    capstone: DatabaseHandle
-
-
-@dataclass
 class TestKnowledgeHandle:
     capstone: DatabaseHandle
