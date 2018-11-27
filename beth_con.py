@@ -50,28 +50,31 @@ class TestCon:
                 c2.append(concepts[i])
                 i += 1
 
-        c1_line = []
-        c2_line = []
-        j = 0
+        i = 0
+        c1_line_num_all = []
+        c2_line_num_all = []
+        c1_offset_all = []
+        c2_offset_all = []
+        while i < len(c1_line_all):
+            c1_line_num_all.append(re.findall(r"(\d*?):", c1_line_all[i]))
+            c2_line_num_all.append(re.findall(r"(\d*?):", c2_line_all[i]))
+            c1_offset_all.append(re.findall(r":(\d*)", c1_line_all[i]))
+            c2_offset_all.append(re.findall(r":(\d*)", c2_line_all[i]))
+            i += 1
+
+
         print("c1")
-        print(c1_line_all)
-        while j < len(c1_line_all):
-            if j % 4 == 0:
-                c1_first = c1_line[j]
-                c1_sec = c1_line[j+1]
-                c2_first = c2_line[j]
-                c2_sec = c2_line[j+1]
-                c1_line.append(f"{c1_first} {c1_sec}")
-                c2_line.append(f"{c2_first} {c2_sec}")
-                j += 1
-            elif j % 4 == 2:
-                c1_third = c1_line[j]
-                c1_fourth = c1_line[j + 1]
-                c1_third = c2_line[j]
-                c2_fourth = c2_line[j + 1]
-                c1_line.append(f"{c1_third} {c1_fourth}")
-                c2_line.append(f"{c1_fourth} {c2_fourth}")
-                j += 1
+        print(c1)
+        print("c2")
+        print(c2)
+        print("c1_line_num_all")
+        print(c1_line_num_all)
+        print("c1_offset_all")
+        print(c1_offset_all)
+        print("c2_line_num_all")
+        print(c2_line_num_all)
+        print("c2_offset_all")
+        print(c2_offset_all)
 
 
 # Actual class to be called and run on server
@@ -140,7 +143,5 @@ if __name__ == '__main__':
     # beth_con.handles.capstone = DatabaseHandle(usr, pw, cap_db, cap_host)
     # beth_con.parse_beth_con_file("BETHCON")
     test = TestCon()
-    test.test_con()
     test.test_rel()
-    # test.test_rel()
 
