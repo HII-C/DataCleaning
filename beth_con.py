@@ -100,6 +100,7 @@ class TestCon:
             row = 0
             # For each .rel file, store the values as a new row in the table
             while row < len(c1_line_all):
+                # will use file_num as record number
                 curr_c1 = c1[row]
                 curr_c1_line_num_start = c1_line_num_start[row]
                 curr_c1_line_num_end = c1_line_num_end[row]
@@ -111,7 +112,8 @@ class TestCon:
                 curr_c2_offset_start = c2_offset_start[row]
                 curr_c2_offset_end = c2_offset_end[row]
                 curr_relation = rel[row]
-                # will use file_num as record number
+
+                # SQL Query to insert row
                 exec_str = f'''INSERT INTO {tbl} VALUES ({file_num}, {curr_c1}, {curr_c2}, {curr_c1_line_num_start},
                 {curr_c1_offset_start}, {curr_c1_line_num_end}, {curr_c1_offset_end}, {curr_c2_line_num_start}, 
                 {curr_c2_offset_start}, {curr_c2_line_num_end}, {curr_c2_offset_end}, {curr_relation})'''
