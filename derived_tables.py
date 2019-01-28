@@ -77,6 +77,22 @@ class DerivedTableGeneration:
         self.handles.mimic.cursor.execute(exec_str)
         self.handles.mimic.connection.commit()
 
+    def create_semmed_derivation(self, source, tbl):
+        semmed_source_str = f"""semmed.{source}"""
+        derived_tbl_str = f"""derived.{tbl}"""
+        create_str = """PREDICATE VARCHAR(50), SUBJECT_CUI VARCHAR(255), OBJECT_CUI VARCHAR(255), COUNT INT"""
+        # number of rows in predication table is 93974376
+        # Check with Austin, but instead of trying to query for number of rows in predication table in order to sample,
+        # we should use this number instead to help with performance
+        select_str = """SELECT PREDICATE, SUBJECT_CUI, OBJECT_CUI"""
+
+        exec_str = f"""CREATE TABLE {derived_tbl_str}{create_str} AS {select_str} from {semmed_source_str} ORDER BY RAND() LIMIT 100"""
+        update_str = f"""UPDATE {derived_tbl_str} SET COUNT = 1"""
+        self.handles.mimic.cursor.execute(exec_str)
+        self.handles.mimic.connection.commit()
+        self.handles.mimic.cursor.execute(update_str)
+        self.handles.mimic.connection.commit()
+
 
 if __name__ == '__main__':
     usr = 'greenes2018'
@@ -85,10 +101,13 @@ if __name__ == '__main__':
     mimic_host = 'db01.healthcreek.org'
     der_db = 'derived'
     der_host = 'db01.healthcreek.org'
+    semmed_db = 'semmed'
+    semmed_host = 'db01.healthcreek.org'
 
     d_tbl_gen = DerivedTableGeneration()
     d_tbl_gen.handles.mimic = DatabaseHandle(usr, pw, mimic_db, mimic_host)
     d_tbl_gen.handles.derived = DatabaseHandle(usr, pw, der_db, der_host)
+    d_tbl_gen.handles.semmed = DatabaseHandle(usr, pw, semmed_db, semmed_host)
 
     d_tbl_gen.create_derived_patients_as_index(
         'PRESCRIPTIONS', 'patients_as_index')
@@ -97,3 +116,5 @@ if __name__ == '__main__':
     d_tbl_gen.create_derived_loinc_labevents('loinc_labevents')
     # d_tbl_gen.create_derived_patient_has_diabetes('PRESCRIPTIONS', 'patient_has_diabetes')
     d_tbl_gen.create_derived_loinc_labevents_min('loinc_labevents_min')
+
+    d_tbl_gen.create_semmed_derivation('PREDICATION', 'semmed_derivation')
