@@ -78,20 +78,37 @@ class DerivedTableGeneration:
         self.handles.mimic.connection.commit()
 
     def create_semmed_derivation(self, source, tbl):
-        semmed_source_str = f"""semmed.{source}"""
+        semmed_source_str = f'''semmed.{source}'''
         derived_tbl_str = f"""derived.{tbl}"""
-        create_str = """PREDICATE VARCHAR(50), SUBJECT_CUI VARCHAR(255), OBJECT_CUI VARCHAR(255), COUNT INT"""
+        create_str = '''PREDICATE VARCHAR(50), SUBJECT_CUI VARCHAR(255), OBJECT_CUI VARCHAR(255), COUNT INT NOT NULL DEFAULT 1'''
         # number of rows in predication table is 93974376
         # Check with Austin, but instead of trying to query for number of rows in predication table in order to sample,
         # we should use this number instead to help with performance
-        select_str = """SELECT PREDICATE, SUBJECT_CUI, OBJECT_CUI"""
 
-        exec_str = f"""CREATE TABLE {derived_tbl_str}{create_str} AS {select_str} from {semmed_source_str} ORDER BY RAND() LIMIT 100"""
-        update_str = f"""UPDATE {derived_tbl_str} SET COUNT = 1"""
-        self.handles.mimic.cursor.execute(exec_str)
-        self.handles.mimic.connection.commit()
-        self.handles.mimic.cursor.execute(update_str)
-        self.handles.mimic.connection.commit()
+        # get random sample of 100 subject_cui, then find all occurrences of each subject_cui in predications table
+        select_str = '''SELECT SUBJECT_CUI'''
+        exec_str = f'''{select_str} FROM {semmed_source_str} ORDER BY RAND() LIMIT 100'''
+        self.handles.semmed.cursor.execute(exec_str)
+        sample_subject_cui = list(self.handles.derived.cursor.fetchall())
+        exec_str = f'''{select_str} FROM {semmed_source_str}'''
+        self.handles.semmed.cursor.execute(exec_str)
+        sem_subject_cui = list(self.handles.semmed.cursor.fetchall())
+        subject_match = [0] * len(sem_subject_cui)
+        # finds the indices in predications table that match the subject_cui in the semmed_derivation table
+        for i in range(len(sem_subject_cui)):
+            for k in range(len(sample_subject_cui)):
+                if sample_subject_cui[k] == sem_subject_cui[i]:
+                    subject_match[i] = 1
+        # create a new table with distinct matches, then compare the two tables to find duplicates
+        exec_str = f'''CREATE TABLE {derived_tbl_str}{create_str}'''
+        self.handles.derived.cursor.execute(exec_str)
+        self.handles.derived.connection.commit()
+        for i in range(len(subject_match)):
+            if subject_match[i] == 1:
+                select_str = '''SELECT PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
+                exec_str = f'''INSERT {derived_tbl_str} {select_str} from {semmed_source_str} LIMIT 1 OFFSET {i}'''
+                self.handles.semmed.cursor.execute(exec_str)
+                self.handles.semmed.connection.commit()
 
 
 if __name__ == '__main__':
