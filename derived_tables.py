@@ -1,5 +1,6 @@
 from db_util import *
 from getpass import getpass
+import random
 
 
 class DerivedTableGeneration:
@@ -80,29 +81,31 @@ class DerivedTableGeneration:
     def create_semmed_derivation(self, source, tbl):
         semmed_source_str = f'''semmed.{source}'''
         derived_tbl_str = f"""derived.{tbl}"""
-        create_str = '''PREDICATE VARCHAR(50), SUBJECT_CUI VARCHAR(255), OBJECT_CUI VARCHAR(255), COUNT INT NOT NULL DEFAULT 1'''
-        # number of rows in predication table is 93974376
-        # Check with Austin, but instead of trying to query for number of rows in predication table in order to sample,
-        # we should use this number instead to help with performance
-
+        create_str = '''PREDICATE VARCHAR(50), SUBJECT_CUI CHAR(9), OBJECT_CUI CHAR(9), COUNT INT NOT NULL DEFAULT 1'''
+        # number of rows in predication table is 93974376, predication id starts at 117370
         # get random sample of 100 subject_cui, then find all occurrences of each subject_cui in predications table
-        select_str = '''SELECT SUBJECT_CUI'''
-        exec_str = f'''{select_str} FROM {semmed_source_str} ORDER BY RAND() LIMIT 100'''
+        num_rows = 93974375
+        predication_id = 117370
+        rand_sample = random.sample(range(predication_id, predication_id + num_rows), 100)
+        select_str = '''SELECT PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
+        exec_str = f'''CREATE TABLE {derived_tbl_str}{create_str} AS {select_str} FROM {semmed_source_str} WHERE PREDICATION_ID = {rand_sample}'''
         self.handles.semmed.cursor.execute(exec_str)
-        sample_subject_cui = list(self.handles.derived.cursor.fetchall())
+        self.handles.semmed.connection.commit()
+
+        select_str = '''SELECT SUBJECT_CUI'''
+        exec_str = f'''{select_str} FROM {derived_tbl_str}'''
+        self.handles.semmed.cursor.execute(exec_str)
+        sample_subj_cui = list(self.handles.derived.cursor.fetchall())
         exec_str = f'''{select_str} FROM {semmed_source_str}'''
         self.handles.semmed.cursor.execute(exec_str)
-        sem_subject_cui = list(self.handles.semmed.cursor.fetchall())
-        subject_match = [0] * len(sem_subject_cui)
+        sem_subj_cui = list(self.handles.semmed.cursor.fetchall())
+        subject_match = [0] * len(sem_subj_cui)
         # finds the indices in predications table that match the subject_cui in the semmed_derivation table
-        for i in range(len(sem_subject_cui)):
-            for k in range(len(sample_subject_cui)):
-                if sample_subject_cui[k] == sem_subject_cui[i]:
+        for i in range(len(sem_subj_cui)):
+            for k in range(len(sample_subj_cui)):
+                if sample_subj_cui[k] == sem_subj_cui[i]:
                     subject_match[i] = 1
-        # create a new table with distinct matches, then compare the two tables to find duplicates
-        exec_str = f'''CREATE TABLE {derived_tbl_str}{create_str}'''
-        self.handles.derived.cursor.execute(exec_str)
-        self.handles.derived.connection.commit()
+        # insert all rows from predication that match subject_cui into semmed_der and keep track of counts
         for i in range(len(subject_match)):
             if subject_match[i] == 1:
                 select_str = '''SELECT PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
