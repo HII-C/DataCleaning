@@ -96,7 +96,7 @@ class DerivedTableGeneration:
         exec_str = f'''{select_str} FROM {derived_tbl_str}'''
         self.handles.derived.cursor.execute(exec_str)
         der_subj_cui = list(self.handles.derived.cursor.fetchall())
-        exec_str = f'''{select_str} FROM {semmed_source_str}'''
+        exec_str = f'''{select_str} FROM {semmed_source_str} LIMIT 100000'''
         self.handles.semmed.cursor.execute(exec_str)
         sem_subj_cui = list(self.handles.semmed.cursor.fetchall())
         subject_match = [0] * len(sem_subj_cui)
@@ -143,12 +143,12 @@ if __name__ == '__main__':
     d_tbl_gen.handles.derived = DatabaseHandle(usr, pw, der_db, der_host)
     d_tbl_gen.handles.semmed = DatabaseHandle(usr, pw, semmed_db, semmed_host)
 
-    d_tbl_gen.create_derived_patients_as_index(
-        'PRESCRIPTIONS', 'patients_as_index')
-    d_tbl_gen.create_derived_visits_as_index(
-        'PRESCRIPTIONS', 'visits_as_index')
-    d_tbl_gen.create_derived_loinc_labevents('loinc_labevents')
-    # d_tbl_gen.create_derived_patient_has_diabetes('PRESCRIPTIONS', 'patient_has_diabetes')
-    d_tbl_gen.create_derived_loinc_labevents_min('loinc_labevents_min')
+    # d_tbl_gen.create_derived_patients_as_index(
+    #     'PRESCRIPTIONS', 'patients_as_index')
+    # d_tbl_gen.create_derived_visits_as_index(
+    #     'PRESCRIPTIONS', 'visits_as_index')
+    # d_tbl_gen.create_derived_loinc_labevents('loinc_labevents')
+    # # d_tbl_gen.create_derived_patient_has_diabetes('PRESCRIPTIONS', 'patient_has_diabetes')
+    # d_tbl_gen.create_derived_loinc_labevents_min('loinc_labevents_min')
 
     d_tbl_gen.create_semmed_derivation('PREDICATION', 'semmed_derivation')
