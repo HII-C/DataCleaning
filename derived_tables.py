@@ -94,24 +94,38 @@ class DerivedTableGeneration:
 
         select_str = '''SELECT SUBJECT_CUI'''
         exec_str = f'''{select_str} FROM {derived_tbl_str}'''
-        self.handles.semmed.cursor.execute(exec_str)
-        sample_subj_cui = list(self.handles.derived.cursor.fetchall())
+        self.handles.derived.cursor.execute(exec_str)
+        der_subj_cui = list(self.handles.derived.cursor.fetchall())
         exec_str = f'''{select_str} FROM {semmed_source_str}'''
         self.handles.semmed.cursor.execute(exec_str)
         sem_subj_cui = list(self.handles.semmed.cursor.fetchall())
         subject_match = [0] * len(sem_subj_cui)
         # finds the indices in predications table that match the subject_cui in the semmed_derivation table
         for i in range(len(sem_subj_cui)):
-            for k in range(len(sample_subj_cui)):
-                if sample_subj_cui[k] == sem_subj_cui[i]:
+            for k in range(len(der_subj_cui)):
+                if der_subj_cui[k] == sem_subj_cui[i]:
                     subject_match[i] = 1
+
         # insert all rows from predication that match subject_cui into semmed_der and keep track of counts
         for i in range(len(subject_match)):
-            if subject_match[i] == 1:
+            if subject_match[i] == 0:
+                # insert tuple in derived table with a default count of 1 if there's no match
                 select_str = '''SELECT PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
                 exec_str = f'''INSERT {derived_tbl_str} {select_str} from {semmed_source_str} LIMIT 1 OFFSET {i}'''
                 self.handles.semmed.cursor.execute(exec_str)
                 self.handles.semmed.connection.commit()
+            else:
+                # select the tuple from predications table to be validated in the derived table
+                select_str = '''SELECT PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
+                exec_str = f'''{select_str} FROM {semmed_source_str} LIMIT 1 OFFSET {i}'''
+                self.handles.semmed.cursor.execute(exec_str)
+                sem_match_row = list(self.handles.semmed.cursor.fetchall())
+                # sem_match_row is a list = {predicate, subject_cui, object_cui}
+                # update count in row in derived table where all fields match the sem_match_row
+                exec_str = f'''UPDATE {derived_tbl_str} SET COUNT = COUNT + 1 WHERE PREDICATE = {sem_match_row[0]}, 
+                SUBJECT_CUI = {sem_match_row[1]}, OBJECT_CUI = {sem_match_row[2]}'''
+                self.handles.derived.cursor.execute(exec_str)
+                self.handles.derived.connection.commit()
 
 
 if __name__ == '__main__':
