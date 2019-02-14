@@ -1,7 +1,6 @@
 from db_util import *
 from getpass import getpass
 import random
-import mysql.connector;
 
 
 class DerivedTableGeneration:
