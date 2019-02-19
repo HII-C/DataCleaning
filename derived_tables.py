@@ -81,14 +81,16 @@ class DerivedTableGeneration:
     def create_semmed_derivation(self, source, tbl):
         semmed_source_str = f'''semmed.{source}'''
         derived_tbl_str = f"""derived.{tbl}"""
-        create_str = '''PREDICATE VARCHAR(50), SUBJECT_CUI CHAR(9), OBJECT_CUI CHAR(9), COUNT INT NOT NULL DEFAULT 1'''
+        create_str = '''PREDICATION_ID UNSIGNED INT NOT NULL, PREDICATE VARCHAR(50), SUBJECT_CUI CHAR(9), 
+        OBJECT_CUI CHAR(9), COUNT INT NOT NULL DEFAULT 1'''
         # number of rows in predication table is 93974376, predication id starts at 117370
         # get random sample of 100 subject_cui, then find all occurrences of each subject_cui in predications table
         num_rows = 93974375
         predication_id = 117370
         rand_sample = random.sample(range(predication_id, predication_id + num_rows), 100)
-        select_str = '''SELECT PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
-        exec_str = f'''CREATE TABLE {derived_tbl_str}{create_str} AS {select_str} FROM {semmed_source_str} WHERE PREDICATION_ID = {rand_sample}'''
+        select_str = '''SELECT PREDICATION_ID, PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
+        exec_str = f'''CREATE TABLE {derived_tbl_str}{create_str} AS {select_str} FROM {semmed_source_str} 
+        WHERE PREDICATION_ID = {rand_sample}'''
         self.handles.semmed.cursor.execute(exec_str)
         self.handles.semmed.connection.commit()
 
@@ -110,22 +112,35 @@ class DerivedTableGeneration:
         for i in range(len(subject_match)):
             if subject_match[i] == 0:
                 # insert tuple in derived table with a default count of 1 if there's no match
-                select_str = '''SELECT PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
+                select_str = '''SELECT PREDICATION_ID, PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
                 exec_str = f'''INSERT {derived_tbl_str} {select_str} from {semmed_source_str} LIMIT 1 OFFSET {i}'''
                 self.handles.semmed.cursor.execute(exec_str)
                 self.handles.semmed.connection.commit()
             else:
                 # select the tuple from predications table to be validated in the derived table
-                select_str = '''SELECT PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
+                select_str = '''SELECT PREDICATION_ID, PREDICATE, SUBJECT_CUI, OBJECT_CUI'''
                 exec_str = f'''{select_str} FROM {semmed_source_str} LIMIT 1 OFFSET {i}'''
                 self.handles.semmed.cursor.execute(exec_str)
                 sem_match_row = list(self.handles.semmed.cursor.fetchall())
-                # sem_match_row is a list = {predicate, subject_cui, object_cui}
+                # sem_match_row is a list = {predication_id, predicate, subject_cui, object_cui}
                 # update count in row in derived table where all fields match the sem_match_row
                 exec_str = f'''UPDATE {derived_tbl_str} SET COUNT = COUNT + 1 WHERE PREDICATE = {sem_match_row[0]}, 
                 SUBJECT_CUI = {sem_match_row[1]}, OBJECT_CUI = {sem_match_row[2]}'''
                 self.handles.derived.cursor.execute(exec_str)
                 self.handles.derived.connection.commit()
+
+    def create_derived_score_pair(self, source, source_2, tbl):
+        semmed_source_str = f'''semmed.{source}'''
+        derived_source_str = f'''derived.{source_2}'''
+        derived_tbl_str = f"""derived.{tbl}"""
+        create_str = '''PREDICATE VARCHAR(50), SUBJECT_CUI CHAR(9), OBJECT_CUI CHAR(9), COUNT INT NOT NULL DEFAULT 1,
+        SUBJECT_SCORE UNSIGNED INT, OBJECT_SCORE UNSIGNED INT'''
+        select_str = f'''SELECT {derived_source_str}.PREDICATION_ID, {derived_source_str}.PREDICATE, 
+        {derived_source_str}.SUBJECT_CUI, {derived_source_str}.OBJECT_CUI, {derived_source_str}.COUNT, 
+        {semmed_source_str}.SUBJECT_SCORE, {semmed_source_str}.OBJECT_SCORE'''
+
+
+
 
 
 if __name__ == '__main__':
@@ -152,3 +167,4 @@ if __name__ == '__main__':
     # d_tbl_gen.create_derived_loinc_labevents_min('loinc_labevents_min')
 
     d_tbl_gen.create_semmed_derivation('PREDICATION', 'semmed_derivation')
+    d_tbl_gen.create_derived_score_pair('PREDICATION_AUX', 'semmed_derivation', 'semmed_score_pair')
