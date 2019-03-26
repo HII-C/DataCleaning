@@ -133,14 +133,15 @@ class DerivedTableGeneration:
         semmed_source_str = f'''semmed.{source}'''
         derived_source_str = f'''derived.{source_2}'''
         derived_tbl_str = f"""derived.{tbl}"""
-        create_str = '''PREDICATE VARCHAR(50), SUBJECT_CUI CHAR(9), OBJECT_CUI CHAR(9), COUNT INT NOT NULL DEFAULT 1,
-        SUBJECT_SCORE UNSIGNED INT, OBJECT_SCORE UNSIGNED INT'''
+        create_str = '''PREDICATION_ID UNSIGNED INT NOT NULL, PREDICATE VARCHAR(50), SUBJECT_CUI CHAR(9), 
+        OBJECT_CUI CHAR(9), COUNT INT NOT NULL DEFAULT 1, SUBJECT_SCORE UNSIGNED INT, OBJECT_SCORE UNSIGNED INT'''
         select_str = f'''SELECT {derived_source_str}.PREDICATION_ID, {derived_source_str}.PREDICATE, 
         {derived_source_str}.SUBJECT_CUI, {derived_source_str}.OBJECT_CUI, {derived_source_str}.COUNT, 
         {semmed_source_str}.SUBJECT_SCORE, {semmed_source_str}.OBJECT_SCORE'''
-
-
-
+        exec_str = f'''CREATE TABLE {derived_tbl_str}{create_str} AS {select_str} FROM {semmed_source_str}, 
+        {derived_source_str} WHERE {semmed_source_str}.PREDICATION_ID = {derived_source_str}.PREDICATION_ID'''
+        self.handles.semmed.cursor.execute(exec_str)
+        self.handles.semmed.connection.commit()
 
 
 if __name__ == '__main__':
